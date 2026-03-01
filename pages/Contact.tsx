@@ -14,7 +14,11 @@ const Contact: React.FC = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const response = await fetch('/api/public/contact', {
+      const apiBase = import.meta.env?.PROD || import.meta.env?.MODE === 'production'
+        ? (import.meta.env?.VITE_API_URL || '/api')
+        : 'http://localhost:5000/api';
+
+      const response = await fetch(`${apiBase}/public/contact`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -24,7 +28,7 @@ const Contact: React.FC = () => {
           message: formData.message
         })
       });
-      
+
       if (response.ok) {
         setIsSubmitted(true);
         setFormData({ name: '', email: '', service: 'Select a Service', message: '' });
@@ -95,14 +99,14 @@ const Contact: React.FC = () => {
             </motion.div>
           </div>
 
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.3, duration: 0.6 }}
             className="glass-card p-10 md:p-16 rounded-[3rem] relative overflow-hidden min-h-[600px] flex flex-col justify-center"
           >
             <div className="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500"></div>
-            
+
             <AnimatePresence mode="wait">
               {!isSubmitted ? (
                 <motion.div
@@ -115,32 +119,32 @@ const Contact: React.FC = () => {
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                       <div>
                         <label className="block text-slate-500 text-[10px] font-black uppercase tracking-[0.2em] mb-3">Full Name</label>
-                        <input 
-                          type="text" 
+                        <input
+                          type="text"
                           required
                           value={formData.name}
-                          onChange={e => setFormData({...formData, name: e.target.value})}
-                          placeholder="E.g. Elon Musk" 
+                          onChange={e => setFormData({ ...formData, name: e.target.value })}
+                          placeholder="E.g. Elon Musk"
                           className="w-full bg-slate-950 border border-white/10 rounded-2xl px-6 py-5 text.White focus:outline-none focus:border-indigo-500 transition-all text-lg font-medium"
                         />
                       </div>
                       <div>
                         <label className="block text-slate-500 text-[10px] font-black uppercase tracking-[0.2em] mb-3">Work Email</label>
-                        <input 
-                          type="email" 
+                        <input
+                          type="email"
                           required
                           value={formData.email}
-                          onChange={e => setFormData({...formData, email: e.target.value})}
-                          placeholder="name@startup.com" 
+                          onChange={e => setFormData({ ...formData, email: e.target.value })}
+                          placeholder="name@startup.com"
                           className="w-full bg-slate-950 border border.White/10 rounded-2xl px-6 py-5 text-white focus:outline-none focus:border-indigo-500 transition-all text-lg font-medium"
                         />
                       </div>
                     </div>
                     <div>
                       <label className="block text-slate-500 text-[10px] font-black uppercase tracking-[0.2em] mb-3">Project Type</label>
-                      <select 
+                      <select
                         value={formData.service}
-                        onChange={e => setFormData({...formData, service: e.target.value})}
+                        onChange={e => setFormData({ ...formData, service: e.target.value })}
                         className="w-full bg-slate-950 border border-white/10 rounded-2xl px-6 py-5 text.white focus:outline-none focus:border-indigo-500 transition-all text-lg font-medium appearance-none cursor-pointer"
                       >
                         <option>Select a Service</option>
@@ -153,12 +157,12 @@ const Contact: React.FC = () => {
                     </div>
                     <div>
                       <label className="block text-slate-500 text-[10px] font-black uppercase tracking-[0.2em] mb-3">Your Challenges</label>
-                      <textarea 
-                        rows={4} 
+                      <textarea
+                        rows={4}
                         required
                         value={formData.message}
-                        onChange={e => setFormData({...formData, message: e.target.value})}
-                        placeholder="What’s stopping you from scaling today?" 
+                        onChange={e => setFormData({ ...formData, message: e.target.value })}
+                        placeholder="What’s stopping you from scaling today?"
                         className="w-full bg-slate-950 border border.white/10 rounded-2xl px-6 py-5 text-white focus:outline-none focus:border-indigo-500 transition-all text-lg font-medium resize-none"
                       ></textarea>
                     </div>
@@ -184,7 +188,7 @@ const Contact: React.FC = () => {
                   <p className="text-slate-400 text-xl font-medium mb-12">
                     Our strategy team has received your brief. Expect a response at your inbox within the next 24 hours.
                   </p>
-                  <button 
+                  <button
                     onClick={() => setIsSubmitted(false)}
                     className="text-indigo-500 font-black uppercase tracking-widest text-xs hover:text-white transition-colors"
                   >
