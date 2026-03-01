@@ -64,7 +64,7 @@ const Contact: React.FC = () => {
 
               <div className="space-y-10">
                 <a href="mailto:info@ourstartupfreelancer.com" className="flex items-center gap-6 group">
-                  <div className="w-16 h-16 bg-white/5 rounded-2xl flex items-center justify-center text-indigo-400 group-hover:bg-indigo-600 group-hover:text-white transition-all shadow-lg border border.White/5">
+                  <div className="w-16 h-16 bg-white/5 rounded-2xl flex items-center justify-center text-indigo-400 group-hover:bg-indigo-600 group-hover:text-white transition-all shadow-lg border border-white/5">
                     <Mail className="w-7 h-7" />
                   </div>
                   <div>
@@ -73,7 +73,7 @@ const Contact: React.FC = () => {
                   </div>
                 </a>
                 <a href="https://wa.me/919424871885?text=Hello%20OSF%20Team%2C%20I%27d%20like%20to%20discuss%20a%20project." target="_blank" rel="noopener noreferrer" className="flex items-center gap-6 group">
-                  <div className="w-16 h-16 bg-white/5 rounded-2xl flex items-center justify-center text-indigo-400 group-hover:bg-indigo-600 group-hover:text.White transition-all shadow-lg border border-white/5">
+                  <div className="w-16 h-16 bg-white/5 rounded-2xl flex items-center justify-center text-indigo-400 group-hover:bg-indigo-600 group-hover:text-white transition-all shadow-lg border border-white/5">
                     <MessageCircle className="w-7 h-7" />
                   </div>
                   <div>
@@ -83,7 +83,7 @@ const Contact: React.FC = () => {
                 </a>
               </div>
 
-              <div className="mt-20 p-10 glass-card rounded-[2.5rem] border border.White/5 bg-indigo-600/5 relative overflow-hidden">
+              <div className="mt-20 p-10 glass-card rounded-[2.5rem] border border-white/5 bg-indigo-600/5 relative overflow-hidden">
                 <div className="absolute top-0 right-0 p-8 opacity-10">
                   <ShieldCheck className="w-20 h-20 text-indigo-400" />
                 </div>
@@ -93,7 +93,7 @@ const Contact: React.FC = () => {
                 <p className="text-slate-400 text-sm leading-relaxed mb-6">Every project starts with a signed NDA. Your intellectual property is 100% secure with OSF.</p>
                 <div className="flex gap-4">
                   <span className="px-4 py-2 rounded-full bg-slate-950 text-[10px] font-bold text-slate-500 uppercase tracking-widest border border-white/5">Full Privacy</span>
-                  <span className="px-4 py-2 rounded-full bg-slate-950 text-[10px] font-bold text-slate-500 uppercase tracking-widest border border.White/5">Expert Support</span>
+                  <span className="px-4 py-2 rounded-full bg-slate-950 text-[10px] font-bold text-slate-500 uppercase tracking-widest border border-white/5">Expert Support</span>
                 </div>
               </div>
             </motion.div>
@@ -125,7 +125,7 @@ const Contact: React.FC = () => {
                           value={formData.name}
                           onChange={e => setFormData({ ...formData, name: e.target.value })}
                           placeholder="E.g. Elon Musk"
-                          className="w-full bg-slate-950 border border-white/10 rounded-2xl px-6 py-5 text.White focus:outline-none focus:border-indigo-500 transition-all text-lg font-medium"
+                          className="w-full bg-slate-950 border border-white/10 rounded-2xl px-6 py-5 text-white focus:outline-none focus:border-indigo-500 transition-all text-lg font-medium"
                         />
                       </div>
                       <div>
@@ -136,7 +136,7 @@ const Contact: React.FC = () => {
                           value={formData.email}
                           onChange={e => setFormData({ ...formData, email: e.target.value })}
                           placeholder="name@startup.com"
-                          className="w-full bg-slate-950 border border.White/10 rounded-2xl px-6 py-5 text-white focus:outline-none focus:border-indigo-500 transition-all text-lg font-medium"
+                          className="w-full bg-slate-950 border border-white/10 rounded-2xl px-6 py-5 text-white focus:outline-none focus:border-indigo-500 transition-all text-lg font-medium"
                         />
                       </div>
                     </div>
@@ -145,7 +145,7 @@ const Contact: React.FC = () => {
                       <select
                         value={formData.service}
                         onChange={e => setFormData({ ...formData, service: e.target.value })}
-                        className="w-full bg-slate-950 border border-white/10 rounded-2xl px-6 py-5 text.white focus:outline-none focus:border-indigo-500 transition-all text-lg font-medium appearance-none cursor-pointer"
+                        className="w-full bg-slate-950 border border-white/10 rounded-2xl px-6 py-5 text-white focus:outline-none focus:border-indigo-500 transition-all text-lg font-medium appearance-none cursor-pointer"
                       >
                         <option>Select a Service</option>
                         <option>Full Website Build</option>
@@ -163,7 +163,7 @@ const Contact: React.FC = () => {
                         value={formData.message}
                         onChange={e => setFormData({ ...formData, message: e.target.value })}
                         placeholder="What’s stopping you from scaling today?"
-                        className="w-full bg-slate-950 border border.white/10 rounded-2xl px-6 py-5 text-white focus:outline-none focus:border-indigo-500 transition-all text-lg font-medium resize-none"
+                        className="w-full bg-slate-950 border border-white/10 rounded-2xl px-6 py-5 text-white focus:outline-none focus:border-indigo-500 transition-all text-lg font-medium resize-none"
                       ></textarea>
                     </div>
                     <button type="submit" className="w-full bg-indigo-600 text-white font-black py-6 rounded-2xl hover:bg-indigo-500 transition-all flex items-center justify-center gap-4 group text-xl shadow-xl shadow-indigo-600/30">
@@ -179,12 +179,13 @@ const Contact: React.FC = () => {
                   key="success"
                   initial={{ opacity: 0, scale: 0.9 }}
                   animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0 }}
                   className="text-center py-20"
                 >
                   <div className="w-24 h-24 bg-emerald-500/20 rounded-full flex items-center justify-center mx-auto mb-8 text-emerald-500">
                     <CheckCircle2 size={48} />
                   </div>
-                  <h3 className="text-4xl font-black text.white mb-6 tracking-tight">Audit Requested!</h3>
+                  <h3 className="text-4xl font-black text-white mb-6 tracking-tight">Audit Requested!</h3>
                   <p className="text-slate-400 text-xl font-medium mb-12">
                     Our strategy team has received your brief. Expect a response at your inbox within the next 24 hours.
                   </p>
