@@ -15,13 +15,15 @@ import { Project, Message, ProjectFile, ActivityLog, User } from '../types';
 import { LogoNavbar, LogoIcon } from '../components/BrandLogos';
 import { GoogleGenAI } from "@google/genai";
 
-const API_BASE = import.meta.env?.PROD || import.meta.env?.MODE === 'production'
-    ? (import.meta.env?.VITE_API_URL || '/api')
-    : 'http://localhost:5000/api';
-
 /**
  * DASHBOARD ENTRY POINT
  */
+const getApiBase = () => {
+    const isProd = import.meta.env?.PROD || import.meta.env?.MODE === 'production';
+    return isProd ? (import.meta.env?.VITE_API_URL || '/api') : 'http://localhost:5000/api';
+};
+const API_BASE = getApiBase();
+
 const Dashboard: React.FC = () => {
     const { user, isLoading: authLoading } = useAuth();
     const { isLoading: appLoading } = useAppState();
@@ -182,8 +184,8 @@ const ClientSidebarLink = ({ to, icon, label, isOpen }: any) => {
     const active = location.pathname === to;
     return (
         <Link to={to} className={`flex items-center gap-5 p-4 rounded-[1.5rem] transition-all duration-300 ${active
-                ? 'bg-indigo-600 text-white shadow-2xl shadow-indigo-600/40'
-                : 'text-slate-500 hover:text-white hover:bg-white/5'
+            ? 'bg-indigo-600 text-white shadow-2xl shadow-indigo-600/40'
+            : 'text-slate-500 hover:text-white hover:bg-white/5'
             }`}>
             {React.cloneElement(icon, { size: 20 })}
             {isOpen && <span className="font-black text-xs uppercase tracking-widest">{label}</span>}
@@ -444,7 +446,7 @@ const ClientMessages = ({ project }: { project: Project }) => {
             if (!token) return;
 
             try {
-                const res = await fetch(`/api/messages/${project.id}`, {
+                const res = await fetch(`${API_BASE}/messages/${project.id}`, {
                     headers: {
                         'Authorization': `Bearer ${token}`,
                         'Content-Type': 'application/json'
@@ -546,7 +548,7 @@ const ClientFiles = ({ project }: { project: Project }) => {
             if (!token) return;
 
             try {
-                const res = await fetch(`/api/files/${project.id}`, {
+                const res = await fetch(`${API_BASE}/files/${project.id}`, {
                     headers: {
                         'Authorization': `Bearer ${token}`,
                         'Content-Type': 'application/json'
@@ -701,7 +703,7 @@ const AdminMessages = () => {
             if (!token) return;
 
             try {
-                const res = await fetch(`/api/messages/${selectedProjectId}`, {
+                const res = await fetch(`${API_BASE}/messages/${selectedProjectId}`, {
                     headers: {
                         'Authorization': `Bearer ${token}`,
                         'Content-Type': 'application/json'
@@ -816,10 +818,10 @@ const AdminMessages = () => {
                     {projectMessages.length > 0 ? projectMessages.map((m: Message) => (
                         <div key={m.id} className={`flex ${m.isSystem ? 'justify-center' : m.senderId === user?.id ? 'justify-end' : 'justify-start'}`}>
                             <div className={`max-w-[75%] p-6 rounded-[2rem] text-sm leading-relaxed ${m.isSystem
-                                    ? 'bg-indigo-500/10 text-indigo-400 font-black border border-indigo-500/20 px-10 py-2.5 rounded-full text-[10px] tracking-widest uppercase'
-                                    : m.senderId === user?.id
-                                        ? 'bg-indigo-600 text-white rounded-tr-none shadow-2xl'
-                                        : 'bg-slate-800 border border-white/10 text-slate-300 rounded-tl-none shadow-xl'
+                                ? 'bg-indigo-500/10 text-indigo-400 font-black border border-indigo-500/20 px-10 py-2.5 rounded-full text-[10px] tracking-widest uppercase'
+                                : m.senderId === user?.id
+                                    ? 'bg-indigo-600 text-white rounded-tr-none shadow-2xl'
+                                    : 'bg-slate-800 border border-white/10 text-slate-300 rounded-tl-none shadow-xl'
                                 }`}>
                                 {!m.isSystem && (
                                     <div className="flex items-center justify-between gap-10 mb-2 border-b border-white/5 pb-2">
@@ -997,8 +999,8 @@ const AdminClients = ({ projects }: { projects: Project[] }) => {
                                             </td>
                                             <td className="px-8 py-8">
                                                 <span className={`px-4 py-1.5 rounded-full font-black uppercase tracking-widest text-[9px] border ${client.isActive
-                                                        ? 'bg-emerald-500/10 text-emerald-500 border-emerald-500/20'
-                                                        : 'bg-slate-700/10 text-slate-500 border-slate-700/20'
+                                                    ? 'bg-emerald-500/10 text-emerald-500 border-emerald-500/20'
+                                                    : 'bg-slate-700/10 text-slate-500 border-slate-700/20'
                                                     }`}>
                                                     {client.isActive ? 'ACTIVE' : 'INACTIVE'}
                                                 </span>
@@ -1401,8 +1403,8 @@ const AdminProjects = () => {
                                     type="button"
                                     onClick={() => updateProjectStage(p.id, 'Launch', 'completed')}
                                     className={`w-6 h-6 rounded-full border flex items-center justify-center text-[10px] ${p.status === 'completed'
-                                            ? 'bg-emerald-500 border-emerald-500 text-slate-950'
-                                            : 'bg-slate-900 border-slate-600 text-emerald-400 hover:bg-emerald-500 hover:border-emerald-500 hover:text-slate-950 transition-colors'
+                                        ? 'bg-emerald-500 border-emerald-500 text-slate-950'
+                                        : 'bg-slate-900 border-slate-600 text-emerald-400 hover:bg-emerald-500 hover:border-emerald-500 hover:text-slate-950 transition-colors'
                                         }`}
                                     title="Mark project as completed"
                                 >
@@ -1566,8 +1568,8 @@ const AdminProjects = () => {
                                 onDrop={handleDrop}
                                 onClick={() => fileInputRef.current?.click()}
                                 className={`border-2 border-dashed rounded-3xl p-16 text-center cursor-pointer transition-all ${dragActive
-                                        ? 'border-indigo-500 bg-indigo-500/10'
-                                        : 'border-white/10 hover:border-indigo-500/50 hover:bg-white/5'
+                                    ? 'border-indigo-500 bg-indigo-500/10'
+                                    : 'border-white/10 hover:border-indigo-500/50 hover:bg-white/5'
                                     } ${uploading ? 'opacity-50 pointer-events-none' : ''}`}
                             >
                                 <input

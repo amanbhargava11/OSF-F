@@ -14,7 +14,11 @@ const Contact: React.FC = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const response = await fetch('/api/public/contact', {
+      const apiBase = import.meta.env?.PROD || import.meta.env?.MODE === 'production'
+        ? (import.meta.env?.VITE_API_URL || '/api')
+        : 'http://localhost:5000/api';
+
+      const response = await fetch(`${apiBase}/public/contact`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
