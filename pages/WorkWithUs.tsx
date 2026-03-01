@@ -149,109 +149,104 @@ const WorkWithUs: React.FC = () => {
           >
             <div className="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500"></div>
 
-            <AnimatePresence mode="wait">
-              {!isSubmitted ? (
-                <motion.div
-                  key="form"
-                  initial={{ opacity: 1 }}
-                  exit={{ opacity: 0, scale: 0.9 }}
-                >
-                  <h3 className="text-3xl font-black text-white mb-10">Start Your Project</h3>
-                  <form onSubmit={handleSubmit} className="space-y-8">
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                      <div>
-                        <label className="block text-slate-500 text-[10px] font-black uppercase tracking-[0.2em] mb-3">Full Name</label>
-                        <input
-                          type="text"
-                          required
-                          value={formData.name}
-                          onChange={e => setFormData({ ...formData, name: e.target.value })}
-                          placeholder="E.g. Elon Musk"
-                          className="w-full bg-slate-950 border border-white/10 rounded-2xl px-6 py-5 text-white focus:outline-none focus:border-indigo-500 transition-all text-lg font-medium"
-                        />
-                      </div>
-                      <div>
-                        <label className="block text-slate-500 text-[10px] font-black uppercase tracking-[0.2em] mb-3">Work Email</label>
-                        <input
-                          type="email"
-                          required
-                          value={formData.email}
-                          onChange={e => setFormData({ ...formData, email: e.target.value })}
-                          placeholder="name@startup.com"
-                          className="w-full bg-slate-950 border border-white/10 rounded-2xl px-6 py-5 text-white focus:outline-none focus:border-indigo-500 transition-all text-lg font-medium"
-                        />
-                      </div>
-                    </div>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                      <div>
-                        <label className="block text-slate-500 text-[10px] font-black uppercase tracking-[0.2em] mb-3">Company</label>
-                        <input
-                          type="text"
-                          required
-                          value={formData.company}
-                          onChange={e => setFormData({ ...formData, company: e.target.value })}
-                          placeholder="Your Startup"
-                          className="w-full bg-slate-950 border border-white/10 rounded-2xl px-6 py-5 text-white focus:outline-none focus:border-indigo-500 transition-all text-lg font-medium"
-                        />
-                      </div>
-                      <div>
-                        <label className="block text-slate-500 text-[10px] font-black uppercase tracking-[0.2em] mb-3">Your Role</label>
-                        <select
-                          value={formData.role}
-                          onChange={e => setFormData({ ...formData, role: e.target.value })}
-                          className="w-full bg-slate-950 border border-white/10 rounded-2xl px-6 py-5 text-white focus:outline-none focus:border-indigo-500 transition-all text-lg font-medium appearance-none cursor-pointer"
-                        >
-                          <option>Founder/CEO</option>
-                          <option>CTO</option>
-                          <option>Product Manager</option>
-                          <option>Marketing Lead</option>
-                          <option>Other</option>
-                        </select>
-                      </div>
+            {!isSubmitted ? (
+              <motion.div
+                initial={{ opacity: 1 }}
+                exit={{ opacity: 0, scale: 0.9 }}
+              >
+                <h3 className="text-3xl font-black text-white mb-10">Start Your Project</h3>
+                <form onSubmit={handleSubmit} className="space-y-8">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div>
+                      <label className="block text-slate-500 text-[10px] font-black uppercase tracking-[0.2em] mb-3">Full Name</label>
+                      <input
+                        type="text"
+                        required
+                        value={formData.name}
+                        onChange={e => setFormData({ ...formData, name: e.target.value })}
+                        placeholder="E.g. Elon Musk"
+                        className="w-full bg-slate-950 border border-white/10 rounded-2xl px-6 py-5 text-white focus:outline-none focus:border-indigo-500 transition-all text-lg font-medium"
+                      />
                     </div>
                     <div>
-                      <label className="block text-slate-500 text-[10px] font-black uppercase tracking-[0.2em] mb-3">Project Details</label>
-                      <textarea
-                        rows={4}
+                      <label className="block text-slate-500 text-[10px] font-black uppercase tracking-[0.2em] mb-3">Work Email</label>
+                      <input
+                        type="email"
                         required
-                        value={formData.message}
-                        onChange={e => setFormData({ ...formData, message: e.target.value })}
-                        placeholder="Tell us about your project, challenges, and goals..."
-                        className="w-full bg-slate-950 border border-white/10 rounded-2xl px-6 py-5 text-white focus:outline-none focus:border-indigo-500 transition-all text-lg font-medium resize-none"
-                      ></textarea>
+                        value={formData.email}
+                        onChange={e => setFormData({ ...formData, email: e.target.value })}
+                        placeholder="name@startup.com"
+                        className="w-full bg-slate-950 border border-white/10 rounded-2xl px-6 py-5 text-white focus:outline-none focus:border-indigo-500 transition-all text-lg font-medium"
+                      />
                     </div>
-                    <button type="submit" className="w-full bg-indigo-600 text-white font-black py-6 rounded-2xl hover:bg-indigo-500 transition-all flex items-center justify-center gap-4 group text-xl shadow-xl shadow-indigo-600/30">
-                      Submit Inquiry <ArrowRight className="w-6 h-6 group-hover:translate-x-1 transition-transform" />
-                    </button>
-                    <div className="flex justify-center items-center gap-3 text-slate-500 text-xs font-bold uppercase tracking-widest">
-                      <ShieldCheck className="w-4 h-4 text-emerald-500" /> Guaranteed response within 24 hours
-                    </div>
-                  </form>
-                </motion.div>
-              ) : (
-                <motion.div
-                  key="success"
-                  initial={{ opacity: 0, scale: 0.9 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  exit={{ opacity: 0 }}
-                  className="text-center py-20"
-                >
-                  <div className="w-24 h-24 bg-emerald-500/20 rounded-full flex items-center justify-center mx-auto mb-8 text-emerald-500">
-                    <CheckCircle2 size={48} />
                   </div>
-                  <h3 className="text-4xl font-black text-white mb-6 tracking-tight">Inquiry Submitted!</h3>
-                  <p className="text-slate-400 text-xl font-medium mb-12">
-                    Our team has received your inquiry. Expect a response at your inbox within the next 24 hours.
-                  </p>
-                  <button
-                    onClick={() => setIsSubmitted(false)}
-                    className="text-indigo-500 font-black uppercase tracking-widest text-xs hover:text-white transition-colors"
-                  >
-                    Submit another inquiry
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div>
+                      <label className="block text-slate-500 text-[10px] font-black uppercase tracking-[0.2em] mb-3">Company</label>
+                      <input
+                        type="text"
+                        required
+                        value={formData.company}
+                        onChange={e => setFormData({ ...formData, company: e.target.value })}
+                        placeholder="Your Startup"
+                        className="w-full bg-slate-950 border border-white/10 rounded-2xl px-6 py-5 text-white focus:outline-none focus:border-indigo-500 transition-all text-lg font-medium"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-slate-500 text-[10px] font-black uppercase tracking-[0.2em] mb-3">Your Role</label>
+                      <select
+                        value={formData.role}
+                        onChange={e => setFormData({ ...formData, role: e.target.value })}
+                        className="w-full bg-slate-950 border border-white/10 rounded-2xl px-6 py-5 text-white focus:outline-none focus:border-indigo-500 transition-all text-lg font-medium appearance-none cursor-pointer"
+                      >
+                        <option>Founder/CEO</option>
+                        <option>CTO</option>
+                        <option>Product Manager</option>
+                        <option>Marketing Lead</option>
+                        <option>Other</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div>
+                    <label className="block text-slate-500 text-[10px] font-black uppercase tracking-[0.2em] mb-3">Project Details</label>
+                    <textarea
+                      rows={4}
+                      required
+                      value={formData.message}
+                      onChange={e => setFormData({ ...formData, message: e.target.value })}
+                      placeholder="Tell us about your project, challenges, and goals..."
+                      className="w-full bg-slate-950 border border-white/10 rounded-2xl px-6 py-5 text-white focus:outline-none focus:border-indigo-500 transition-all text-lg font-medium resize-none"
+                    ></textarea>
+                  </div>
+                  <button type="submit" className="w-full bg-indigo-600 text-white font-black py-6 rounded-2xl hover:bg-indigo-500 transition-all flex items-center justify-center gap-4 group text-xl shadow-xl shadow-indigo-600/30">
+                    Submit Inquiry <ArrowRight className="w-6 h-6 group-hover:translate-x-1 transition-transform" />
                   </button>
-                </motion.div>
-              )}
-            </AnimatePresence>
+                  <div className="flex justify-center items-center gap-3 text-slate-500 text-xs font-bold uppercase tracking-widest">
+                    <ShieldCheck className="w-4 h-4 text-emerald-500" /> Guaranteed response within 24 hours
+                  </div>
+                </form>
+              </motion.div>
+            ) : (
+              <motion.div
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                className="text-center py-20"
+              >
+                <div className="w-24 h-24 bg-emerald-500/20 rounded-full flex items-center justify-center mx-auto mb-8 text-emerald-500">
+                  <CheckCircle2 size={48} />
+                </div>
+                <h3 className="text-4xl font-black text-white mb-6 tracking-tight">Inquiry Submitted!</h3>
+                <p className="text-slate-400 text-xl font-medium mb-12">
+                  Our team has received your inquiry. Expect a response at your inbox within the next 24 hours.
+                </p>
+                <button
+                  onClick={() => setIsSubmitted(false)}
+                  className="text-indigo-500 font-black uppercase tracking-widest text-xs hover:text-white transition-colors"
+                >
+                  Submit another inquiry
+                </button>
+              </motion.div>
+            )}
           </motion.div>
         </div>
 
